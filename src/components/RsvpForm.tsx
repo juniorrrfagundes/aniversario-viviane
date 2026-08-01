@@ -14,16 +14,13 @@ export default function RsvpForm() {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors, isSubmitting },
   } = useForm<RsvpInput, unknown, RsvpOutput>({
     resolver: zodResolver(rsvpSchema),
-    defaultValues: { acompanhante: "nao" },
   });
 
   const [enviado, setEnviado] = useState(false);
   const [erroServidor, setErroServidor] = useState<string | null>(null);
-  const levaAcompanhante = watch("acompanhante") === "sim";
 
   const onSubmit = async (data: RsvpOutput) => {
     setErroServidor(null);
@@ -99,38 +96,6 @@ export default function RsvpForm() {
           </span>
         )}
       </fieldset>
-
-      <fieldset>
-        <span className="text-sm font-semibold text-white/80">
-          Levará acompanhante?
-        </span>
-        <div className="mt-2 flex gap-3">
-          <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-black bg-white/90 px-3 py-2 text-black has-[:checked]:bg-hero-gold">
-            <input type="radio" value="sim" {...register("acompanhante")} />
-            Sim
-          </label>
-          <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-black bg-white/90 px-3 py-2 text-black has-[:checked]:bg-hero-gold">
-            <input type="radio" value="nao" {...register("acompanhante")} />
-            Não
-          </label>
-        </div>
-      </fieldset>
-
-      {levaAcompanhante && (
-        <label className="block">
-          <span className="text-sm font-semibold text-white/80">
-            Quantos acompanhantes?
-          </span>
-          <input
-            type="number"
-            min={0}
-            max={10}
-            {...register("qtdAcompanhantes")}
-            className={inputCls}
-            placeholder="0"
-          />
-        </label>
-      )}
 
       <label className="block">
         <span className="text-sm font-semibold text-white/80">

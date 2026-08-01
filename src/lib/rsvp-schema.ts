@@ -6,8 +6,6 @@ export const rsvpSchema = z.object({
   comparecera: z.enum(["sim", "nao"], {
     message: "Diga se vai comparecer",
   }),
-  acompanhante: z.enum(["sim", "nao"]),
-  qtdAcompanhantes: z.coerce.number().int().min(0).max(10).optional(),
   mensagem: z.string().max(300).optional().or(z.literal("")),
 });
 

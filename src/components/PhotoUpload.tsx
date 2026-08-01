@@ -67,9 +67,9 @@ export default function PhotoUpload() {
   return (
     <div className="space-y-4">
       <p className="mb-1">
-        Envie uma foto sua para aparecer no{" "}
-        <strong className="text-hero-gold">mural da festa</strong>, ao lado da
-        anfitriã! 📸
+        Encontre uma foto antiga com a{" "}
+        <strong className="text-hero-gold">Vivi</strong> e envie para o mural da
+        festa! 📸
       </p>
 
       <label className="block">
@@ -88,7 +88,6 @@ export default function PhotoUpload() {
         ref={inputRef}
         type="file"
         accept="image/*"
-        capture="user"
         onChange={escolher}
         className="hidden"
       />

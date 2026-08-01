@@ -8,8 +8,6 @@ type Registro = {
   nome: string;
   nomeHeroi?: string;
   comparecera: "sim" | "nao";
-  acompanhante: "sim" | "nao";
-  qtdAcompanhantes?: number;
   mensagem?: string;
   criadoEm: string;
 };
@@ -19,7 +17,6 @@ type Resposta = {
     totalRegistros: number;
     confirmados: number;
     naoVao: number;
-    totalPessoasNaFesta: number;
   };
   registros: Registro[];
 };
@@ -57,8 +54,6 @@ export default function ListaPresenca() {
       "Nome",
       "Nome de Heroi",
       "Comparecera",
-      "Acompanhante",
-      "Qtd Acompanhantes",
       "Mensagem",
       "Data",
     ];
@@ -67,8 +62,6 @@ export default function ListaPresenca() {
         r.nome,
         r.nomeHeroi || "",
         r.comparecera === "sim" ? "Sim" : "Nao",
-        r.acompanhante === "sim" ? "Sim" : "Nao",
-        r.qtdAcompanhantes ?? 0,
         (r.mensagem || "").replace(/[\n;]/g, " "),
         new Date(r.criadoEm).toLocaleString("pt-BR"),
       ]
@@ -126,8 +119,7 @@ export default function ListaPresenca() {
       <p className="mt-1 text-sm text-white/60">50 Anos da Super Vivi</p>
 
       {/* Resumo */}
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <Card icon={<Users size={18} />} label="Pessoas na festa" valor={resumo.totalPessoasNaFesta} cor="text-hero-gold" />
+      <div className="mt-5 grid grid-cols-3 gap-3">
         <Card icon={<Check size={18} />} label="Confirmaram" valor={resumo.confirmados} cor="text-green-400" />
         <Card icon={<X size={18} />} label="Não vão" valor={resumo.naoVao} cor="text-hero-red" />
         <Card icon={<Users size={18} />} label="Total respostas" valor={resumo.totalRegistros} cor="text-white" />
@@ -148,7 +140,6 @@ export default function ListaPresenca() {
               <th className="px-3 py-2">Nome</th>
               <th className="px-3 py-2">Herói</th>
               <th className="px-3 py-2">Vai?</th>
-              <th className="px-3 py-2">Acomp.</th>
               <th className="px-3 py-2">Msg</th>
               <th className="px-3 py-2">Data</th>
             </tr>
@@ -156,7 +147,7 @@ export default function ListaPresenca() {
           <tbody>
             {registros.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-3 py-6 text-center text-white/50">
+                <td colSpan={5} className="px-3 py-6 text-center text-white/50">
                   Nenhuma confirmação ainda.
                 </td>
               </tr>
@@ -167,9 +158,6 @@ export default function ListaPresenca() {
                 <td className="px-3 py-2">{r.nomeHeroi || "—"}</td>
                 <td className="px-3 py-2">
                   {r.comparecera === "sim" ? "✅" : "❌"}
-                </td>
-                <td className="px-3 py-2">
-                  {r.acompanhante === "sim" ? `+${r.qtdAcompanhantes ?? 0}` : "—"}
                 </td>
                 <td className="max-w-[160px] truncate px-3 py-2" title={r.mensagem}>
                   {r.mensagem || "—"}

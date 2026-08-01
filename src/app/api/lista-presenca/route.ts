@@ -15,8 +15,6 @@ type LinhaDb = {
   nome: string;
   nome_heroi: string | null;
   comparecera: "sim" | "nao";
-  acompanhante: "sim" | "nao";
-  qtd_acompanhantes: number | null;
   mensagem: string | null;
   criado_em: string;
 };
@@ -44,25 +42,17 @@ export async function GET(req: NextRequest) {
       nome: r.nome,
       nomeHeroi: r.nome_heroi || "",
       comparecera: r.comparecera,
-      acompanhante: r.acompanhante,
-      qtdAcompanhantes: r.qtd_acompanhantes ?? 0,
       mensagem: r.mensagem || "",
       criadoEm: r.criado_em,
     }));
 
     const confirmados = registros.filter((r) => r.comparecera === "sim");
-    const totalPessoas = confirmados.reduce(
-      (soma, r) =>
-        soma + 1 + (r.acompanhante === "sim" ? r.qtdAcompanhantes : 0),
-      0,
-    );
 
     return NextResponse.json({
       resumo: {
         totalRegistros: registros.length,
         confirmados: confirmados.length,
         naoVao: registros.filter((r) => r.comparecera === "nao").length,
-        totalPessoasNaFesta: totalPessoas,
       },
       registros,
     });

@@ -56,9 +56,6 @@ export async function POST(req: NextRequest) {
         nome: d.nome,
         nome_heroi: d.nomeHeroi || null,
         comparecera: d.comparecera,
-        acompanhante: d.acompanhante,
-        qtd_acompanhantes:
-          d.acompanhante === "sim" ? d.qtdAcompanhantes ?? 0 : 0,
         mensagem: d.mensagem || null,
       })
       .select("id")

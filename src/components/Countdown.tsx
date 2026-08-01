@@ -14,8 +14,11 @@ function calc(target: number) {
 
 const Bloco = ({ valor, label }: { valor: number; label: string }) => (
   <div className="flex flex-col items-center">
-    <div className="comic-panel px-2 py-2 min-w-[64px] text-center bg-hero-blue-deep">
-      <span className="font-comic text-3xl text-hero-gold tabular-nums">
+    <div className="comic-panel px-2 py-3 min-w-[68px] text-center bg-hero-blue-deep">
+      <span
+        className="text-4xl font-bold text-hero-gold tabular-nums"
+        style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+      >
         {String(valor).padStart(2, "0")}
       </span>
     </div>
