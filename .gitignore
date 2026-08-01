@@ -3,6 +3,9 @@
 # dados de confirmacoes (dev) - nao commitar dados pessoais
 /data
 
+# pasta-fonte da musica (a copia usada fica em public/music/)
+/musica
+
 # dependencies
 /node_modules
 /.pnp
