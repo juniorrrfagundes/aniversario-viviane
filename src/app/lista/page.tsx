@@ -188,7 +188,7 @@ function Card({
   return (
     <div className="comic-panel px-3 py-3">
       <div className="flex items-center gap-1 text-white/60">{icon}</div>
-      <p className={`font-comic text-3xl ${cor}`}>{valor}</p>
+      <p className={`num text-3xl font-bold ${cor}`}>{valor}</p>
       <p className="text-xs text-white/60">{label}</p>
     </div>
   );

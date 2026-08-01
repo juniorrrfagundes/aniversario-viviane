@@ -39,7 +39,7 @@ export default function Home() {
           <div className="comic-panel mt-6 px-4 py-5">
             <p className="text-sm text-white/70">🎉 CELEBRAÇÃO ESPECIAL</p>
             <p className="comic-title text-3xl mt-1">
-              {EVENT.idade} ANOS DA SUPER VIVI
+              <span className="num">{EVENT.idade}</span> ANOS DA SUPER VIVI
             </p>
             <p className="mt-4 text-sm text-white/80">
               A anfitriã já confirmou presença e comparecerá como:
@@ -82,13 +82,15 @@ export default function Home() {
               <li className="flex items-start gap-3">
                 <CalendarDays className="mt-0.5 shrink-0 text-hero-gold" size={20} />
                 <span>
-                  <strong>Data:</strong> {EVENT.dataTexto}
+                  <strong>Data:</strong>{" "}
+                  <span className="num">{EVENT.dataTexto}</span>
                 </span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock className="mt-0.5 shrink-0 text-hero-gold" size={20} />
                 <span>
-                  <strong>Horário:</strong> {EVENT.horario}
+                  <strong>Horário:</strong>{" "}
+                  <span className="num">{EVENT.horario}</span>
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -208,9 +210,12 @@ export default function Home() {
             viewport={{ once: true }}
             className="comic-panel mt-2 px-4 py-6 text-center"
           >
-            <p className="comic-title text-2xl">💥 NOS VEMOS EM 17/10/2026 💥</p>
+            <p className="comic-title text-2xl">
+              💥 NOS VEMOS EM <span className="num">17/10/2026</span> 💥
+            </p>
             <p className="mt-2 font-comic text-lg text-hero-gold">
-              🌟 FESTA DOS 50 ANOS DA SUPER VIVI 🌟
+              🌟 FESTA DOS <span className="num font-bold">50</span> ANOS DA SUPER
+              VIVI 🌟
             </p>
             <p className="mt-3 text-sm text-white/70">
               Prepare seu uniforme. Recarregue seus poderes. A Super Vivi conta

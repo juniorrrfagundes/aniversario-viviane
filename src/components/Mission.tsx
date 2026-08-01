@@ -35,7 +35,7 @@ export default function Mission({
     >
       {numero && (
         <span className="inline-block font-comic text-sm text-black bg-hero-gold px-2 py-0.5 rounded-md border-2 border-black mb-2">
-          MISSÃO {numero}
+          MISSÃO <span className="num font-bold">{numero}</span>
         </span>
       )}
       <h2 className={`font-comic text-2xl leading-tight mb-3 ${cores[cor]}`}>

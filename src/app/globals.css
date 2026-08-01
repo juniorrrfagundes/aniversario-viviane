@@ -35,6 +35,12 @@ body {
   letter-spacing: 0.02em;
 }
 
+/* Fonte limpa para NÚMEROS (Arial, alinhamento tabular) */
+.num {
+  font-family: Arial, Helvetica, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
 /* Título com contorno estilo HQ */
 .comic-title {
   font-family: var(--font-comic), Impact, sans-serif;
