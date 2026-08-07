@@ -117,6 +117,12 @@ export default function ListaPresenca() {
     <main className="mx-auto w-full max-w-3xl px-4 py-8">
       <h1 className="comic-title text-3xl">Lista de Presença</h1>
       <p className="mt-1 text-sm text-white/60">50 Anos da Super Vivi</p>
+      <a
+        href="/fotos"
+        className="mt-2 inline-flex items-center gap-1 text-sm text-hero-gold underline"
+      >
+        🖼️ Ver galeria de fotos do mural
+      </a>
 
       {/* Resumo */}
       <div className="mt-5 grid grid-cols-3 gap-3">
