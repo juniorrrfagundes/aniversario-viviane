@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
-import { ShieldCheck, PartyPopper } from "lucide-react";
+import { ShieldCheck, PartyPopper, AlertTriangle } from "lucide-react";
 import {
   rsvpSchema,
   type RsvpInput,
@@ -21,9 +21,11 @@ export default function RsvpForm() {
 
   const [enviado, setEnviado] = useState(false);
   const [erroServidor, setErroServidor] = useState<string | null>(null);
+  const [avisoValidacao, setAvisoValidacao] = useState(false);
 
   const onSubmit = async (data: RsvpOutput) => {
     setErroServidor(null);
+    setAvisoValidacao(false);
     try {
       const res = await fetch("/api/rsvp", {
         method: "POST",
@@ -36,6 +38,9 @@ export default function RsvpForm() {
       setErroServidor("Ops! Não conseguimos registrar. Tente novamente.");
     }
   };
+
+  // Chamado quando o usuário clica em enviar mas há campos inválidos
+  const onInvalid = () => setAvisoValidacao(true);
 
   if (enviado) {
     return (
@@ -56,12 +61,14 @@ export default function RsvpForm() {
     "mt-1 w-full rounded-lg border-2 border-black bg-white px-3 py-2 text-black outline-none focus:border-hero-gold";
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit, onInvalid)} className="space-y-4">
       <label className="block">
         <span className="text-sm font-semibold text-white/80">Nome *</span>
         <input {...register("nome")} className={inputCls} placeholder="Seu nome" />
         {errors.nome && (
-          <span className="text-xs text-hero-gold">{errors.nome.message}</span>
+          <span className="mt-1 flex items-center gap-1 text-sm font-semibold text-hero-gold">
+            <AlertTriangle size={14} /> {errors.nome.message}
+          </span>
         )}
       </label>
 
@@ -91,8 +98,8 @@ export default function RsvpForm() {
           </label>
         </div>
         {errors.comparecera && (
-          <span className="text-xs text-hero-gold">
-            {errors.comparecera.message}
+          <span className="mt-2 flex items-center gap-1 text-sm font-semibold text-hero-gold">
+            <AlertTriangle size={14} /> {errors.comparecera.message}
           </span>
         )}
       </fieldset>
@@ -109,10 +116,21 @@ export default function RsvpForm() {
         />
       </label>
 
+      {avisoValidacao && (
+        <div className="flex items-start gap-2 rounded-lg border-2 border-hero-gold bg-hero-gold/15 p-3 text-sm font-semibold text-hero-gold">
+          <AlertTriangle size={18} className="mt-0.5 shrink-0" />
+          <span>
+            Ops! Preencha os campos obrigatórios (*): seu nome e se você vai
+            comparecer.
+          </span>
+        </div>
+      )}
+
       {erroServidor && (
-        <p className="rounded-lg bg-hero-red/20 p-2 text-sm text-hero-gold">
-          {erroServidor}
-        </p>
+        <div className="flex items-start gap-2 rounded-lg border-2 border-hero-red bg-hero-red/20 p-3 text-sm font-semibold text-white">
+          <AlertTriangle size={18} className="mt-0.5 shrink-0" />
+          <span>{erroServidor}</span>
+        </div>
       )}
 
       <button

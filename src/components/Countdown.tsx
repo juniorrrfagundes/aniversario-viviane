@@ -12,11 +12,11 @@ function calc(target: number) {
   return { dias, horas, min, seg, acabou: diff === 0 };
 }
 
-const Bloco = ({ valor, label }: { valor: number; label: string }) => (
+const Bloco = ({ valor, label }: { valor: number | null; label: string }) => (
   <div className="flex flex-col items-center">
     <div className="comic-panel px-2 py-3 min-w-[68px] text-center bg-hero-blue-deep">
       <span className="num text-4xl font-bold text-hero-gold">
-        {String(valor).padStart(2, "0")}
+        {valor === null ? "--" : String(valor).padStart(2, "0")}
       </span>
     </div>
     <span className="mt-1 text-[10px] uppercase tracking-widest text-white/70">
@@ -28,8 +28,12 @@ const Bloco = ({ valor, label }: { valor: number; label: string }) => (
 export default function Countdown() {
   const target = new Date(EVENT.dataISO).getTime();
   const [t, setT] = useState(() => calc(target));
+  // Só mostramos os números depois de montar no cliente, para o HTML do
+  // servidor e o do navegador baterem (evita erro de hydration do React).
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const id = setInterval(() => setT(calc(target)), 1000);
     return () => clearInterval(id);
   }, [target]);
@@ -44,10 +48,10 @@ export default function Countdown() {
 
   return (
     <div className="flex items-start justify-center gap-2">
-      <Bloco valor={t.dias} label="dias" />
-      <Bloco valor={t.horas} label="horas" />
-      <Bloco valor={t.min} label="min" />
-      <Bloco valor={t.seg} label="seg" />
+      <Bloco valor={mounted ? t.dias : null} label="dias" />
+      <Bloco valor={mounted ? t.horas : null} label="horas" />
+      <Bloco valor={mounted ? t.min : null} label="min" />
+      <Bloco valor={mounted ? t.seg : null} label="seg" />
     </div>
   );
 }
