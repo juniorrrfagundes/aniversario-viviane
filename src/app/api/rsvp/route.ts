@@ -53,10 +53,10 @@ export async function POST(req: NextRequest) {
     const { data, error } = await supabase
       .from("confirmacoes")
       .insert({
-        nome: d.nome,
-        nome_heroi: d.nomeHeroi || null,
+        nome: d.nome.trim(),
+        nome_heroi: d.nomeHeroi?.trim() || null,
         comparecera: d.comparecera,
-        mensagem: d.mensagem || null,
+        mensagem: d.mensagem?.trim() || null,
       })
       .select("id")
       .single();
