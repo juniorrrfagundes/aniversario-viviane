@@ -1,0 +1,23 @@
+name: Manter Supabase Ativo
+
+# Roda automaticamente 1x por dia para gerar atividade no Supabase,
+# evitando que o projeto (plano gratuito) pause por inatividade.
+on:
+  schedule:
+    - cron: "0 12 * * *" # todo dia as 12:00 UTC (09:00 no horario de Brasilia)
+  workflow_dispatch: {} # permite rodar na mao pelo botao "Run workflow"
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping no app (le o banco e mantem o Supabase acordado)
+        run: |
+          echo "Pingando o app para manter o Supabase ativo..."
+          code=$(curl -s -o /dev/null -w "%{http_code}" https://aniversario-viviane.vercel.app/api/rsvp)
+          echo "Resposta do site: HTTP $code"
+          if [ "$code" != "200" ]; then
+            echo "ATENCAO: o site/banco nao respondeu 200 (pode estar fora do ar)."
+            exit 1
+          fi
+          echo "Tudo certo — Supabase mantido ativo."
