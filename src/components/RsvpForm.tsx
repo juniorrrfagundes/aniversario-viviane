@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ShieldCheck, PartyPopper, AlertTriangle } from "lucide-react";
 import {
   rsvpSchema,
+  MENSAGEM_MAX,
   type RsvpInput,
   type RsvpOutput,
 } from "@/lib/rsvp-schema";
@@ -14,10 +15,13 @@ export default function RsvpForm() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<RsvpInput, unknown, RsvpOutput>({
     resolver: zodResolver(rsvpSchema),
   });
+
+  const mensagemLen = (watch("mensagem") ?? "").length;
 
   const [enviado, setEnviado] = useState(false);
   const [erroServidor, setErroServidor] = useState<string | null>(null);
@@ -81,6 +85,11 @@ export default function RsvpForm() {
           className={inputCls}
           placeholder="Como quer ser chamado na festa?"
         />
+        {errors.nomeHeroi && (
+          <span className="mt-1 flex items-center gap-1 text-sm font-semibold text-hero-gold">
+            <AlertTriangle size={14} /> {errors.nomeHeroi.message}
+          </span>
+        )}
       </label>
 
       <fieldset>
@@ -114,14 +123,31 @@ export default function RsvpForm() {
           className={inputCls}
           placeholder="Deixe um recado carinhoso 💙"
         />
+        <span className="mt-1 flex items-start justify-between gap-2">
+          {errors.mensagem ? (
+            <span className="flex items-center gap-1 text-sm font-semibold text-hero-gold">
+              <AlertTriangle size={14} /> {errors.mensagem.message}
+            </span>
+          ) : (
+            <span />
+          )}
+          <span
+            className={`num shrink-0 text-xs ${
+              mensagemLen > MENSAGEM_MAX
+                ? "font-bold text-hero-gold"
+                : "text-white/60"
+            }`}
+          >
+            {mensagemLen}/{MENSAGEM_MAX}
+          </span>
+        </span>
       </label>
 
       {avisoValidacao && (
         <div className="flex items-start gap-2 rounded-lg border-2 border-hero-gold bg-hero-gold/15 p-3 text-sm font-semibold text-hero-gold">
           <AlertTriangle size={18} className="mt-0.5 shrink-0" />
           <span>
-            Ops! Preencha os campos obrigatórios (*): seu nome e se você vai
-            comparecer.
+            Ops! Confira os campos destacados em amarelo antes de enviar.
           </span>
         </div>
       )}
